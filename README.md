@@ -1,6 +1,6 @@
-# TENNIS CONNECTOR
+# WooConnect
 
-### This app is made from scratch by Ryan Woo.
+### This app is a personal app made from scratch by Ryan Woo.
 
 ## I'm coding with:
 
