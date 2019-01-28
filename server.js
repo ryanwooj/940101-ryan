@@ -16,6 +16,10 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profiles'));
 app.use('/api/posts', require('./routes/api/posts'));
 
+app.get('/', function(req, res) {
+  res.send('hello world');
+});
+
 //Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
   //Set static folder
