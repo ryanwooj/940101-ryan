@@ -1,7 +1,7 @@
 {
-  "name": "tennisconnector",
+  "name": "wooconnect",
   "version": "1.0.0",
-  "description": "Social network for tennis players",
+  "description": "Ryan Woo's Personal Website!",
   "main": "server.js",
   "scripts": {
     "start": "node server",
