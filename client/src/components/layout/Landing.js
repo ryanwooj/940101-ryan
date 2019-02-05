@@ -9,24 +9,43 @@ const Landing = ({ isAuthenticated }) => {
   }
 
   return (
-    <section className='landing'>
-      <div className='dark-overlay'>
-        <div className='landing-inner'>
-          <h1 className='x-large'>Ryan Woo Connector</h1>
-          <p className='lead'>
-            I would like to get to know you. Please Login to Access
-          </p>
-          <div className='buttons'>
-            <Link to='/register' className='btn btn-primary'>
-              Get In Touch
-            </Link>
-            <Link to='/login' className='btn btn-light'>
-              Login
-            </Link>
+    <div className='is-preload'>
+      <div id='wrapper'>
+        <section id='main'>
+          <div>
+            <span className='avatar'>
+              <img src='../../images/avatar.jpg' alt='' />
+            </span>
+            <h1>Ryan Woo</h1>
+            <p>Full Stack Developer</p>
+            <p>Log in to get Access!</p>
           </div>
-        </div>
+
+          <div>
+            <ul className='icons'>
+              <li>
+                <Link to='/register' className='fas fa-user-plus'>
+                  Register
+                </Link>
+              </li>
+              <li>
+                <Link to='/login' className='fas fa-unlock-alt'>
+                  Login
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <footer id='footer'>
+          <ul className='copyright'>
+            <li>&copy; Ryan Woo</li>
+            <li>
+              Design: <>Ryan Woo</>
+            </li>
+          </ul>
+        </footer>
       </div>
-    </section>
+    </div>
   );
 };
 
