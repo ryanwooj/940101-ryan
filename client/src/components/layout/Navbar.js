@@ -6,16 +6,22 @@ import { logout } from '../../actions/auth';
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
-    <ul>
+    <ul className='right item'>
       <li>
-        <Link to='/profiles'>All People</Link>
+        <Link to='/profiles'>
+          <i className='fas fa-users fa-lg'> </i>{' '}
+          <span className='hide-sm'>People</span>
+        </Link>
       </li>
       <li>
-        <Link to='/posts'>Posts</Link>
+        <Link to='/posts'>
+          <i className='fas fa-folder fa-lg'> </i>{' '}
+          <span className='hide-sm'>Posts</span>
+        </Link>
       </li>
       <li>
         <Link to='/dashboard'>
-          <i className='fas fa-user' />{' '}
+          <i className='fas fa-user-alt fa-lg' />{' '}
           <span className='hide-sm'>Dashboard</span>
         </Link>
       </li>
@@ -29,23 +35,32 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   );
 
   const guestLinks = (
-    <ul>
+    <ul className='right item'>
       <li>
-        <Link to='/profiles'>All People</Link>
+        <Link to='/profiles'>
+          <i className='fas fa-users fa-lg'> </i>{' '}
+          <span className='hide-sm'>People</span>
+        </Link>
       </li>
       <li>
-        <Link to='/register'>Get in Touch</Link>
+        <Link to='/register'>
+          <i className='fas fa-user-plus fa-lg'> </i>{' '}
+          <span className='hide-sm'>Register</span>
+        </Link>
       </li>
       <li>
-        <Link to='/login'>Login</Link>
+        <Link to='/login'>
+          <i className='fas fa-unlock-alt fa-lg'> </i>{' '}
+          <span className='hide-sm'>Login</span>
+        </Link>
       </li>
     </ul>
   );
   return (
-    <nav className='navbar bg-dark'>
+    <nav className='ui menu'>
       <h1>
         <Link to='/'>
-          <i className='fas fa-code' /> Tennis Connector
+          <i className='fas fa-code fa-lg' /> RWoo
         </Link>
       </h1>
       {!loading && (
