@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
 import Routes from './components/routing/Routes';
-import './App.css';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './actions/auth';
 import CssBaseline from '@material-ui/core/CssBaseline';
