@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://devrwoo:wpans3205@devconnector-pewwj.mongodb.net/test?retryWrites=true",
+  "jwtSecret": "ryanWoojaemun",
+  "githubClientId": "d246b599e6367d665852",
+  "githubClientSecret": "1b76cd7f583a7f5933db2ca3d4bf34f134891f5a"
+}
