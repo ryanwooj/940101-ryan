@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 
 const Profile = ({
   getProfileById,
@@ -100,7 +101,9 @@ const Profile = ({
             </Grid>
             <Grid container className={classes.mTop}>
               {profile.github ? (
-                <ProfileGithub username={profile.github} />
+                <Paper className={classes.paper}>
+                  <ProfileGithub username={profile.github} />
+                </Paper>
               ) : (
                 <Typography variant='h5'>No Github Repo</Typography>
               )}
@@ -119,8 +122,8 @@ const useStyles = makeStyles(theme => ({
   mTop: {
     marginTop: theme.spacing(2)
   },
-  paperWidth: {
-    width: '100%'
+  paper: {
+    padding: theme.spacing(3)
   }
 }));
 
