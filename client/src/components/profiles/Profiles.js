@@ -11,7 +11,11 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
-const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
+const Profiles = ({
+  getProfiles,
+  profile: { profiles, loading },
+  auth: { user }
+}) => {
   const classes = useStyles();
   useEffect(() => {
     getProfiles();
@@ -23,7 +27,7 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
         <Spinner />
       ) : (
         <Container>
-          <Dashboard />
+          {user ? <Dashboard /> : <></>}
           <Divider />
           <Grid container justify='flex-start'>
             <Grid item className={classes.doThis}>
@@ -68,11 +72,13 @@ const useStyles = makeStyles(theme => ({
 
 Profiles.propTypes = {
   getProfiles: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  auth: state.auth
 });
 
 export default connect(
