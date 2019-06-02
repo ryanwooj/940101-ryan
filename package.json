@@ -1,7 +1,7 @@
 {
   "name": "wooconnect",
   "version": "1.0.0",
-  "description": "Ryan's personal",
+  "description": "Ryan Woo's personal Website",
   "main": "server.js",
   "scripts": {
     "start": "node server",
@@ -24,8 +24,6 @@
     "mongoose": "^5.5.11",
     "path": "^0.12.7",
     "pm2": "^3.5.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "request": "^2.88.0"
   },
   "devDependencies": {
