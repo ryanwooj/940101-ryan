@@ -8,9 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import Icon from '@material-ui/core/Icon';
 
 const ProfileGithub = ({ username, getGithubRepos, repos }) => {
   useEffect(() => {
@@ -26,51 +24,57 @@ const ProfileGithub = ({ username, getGithubRepos, repos }) => {
           direction='row'
           justify='space-evenly'
           alignItems='flex-start'>
-          <Paper className={classes.paper}>
-            {repos === null ? (
-              <Spinner />
-            ) : (
-              repos.map(repo => {
-                return (
-                  <Grid key={repo.id}>
-                    <Grid item xs={12}>
-                      <Typography variant='h4'>Github Repos</Typography>
-                    </Grid>
-                    <Grid>
-                      <Typography variant='h4' color='primary'>
-                        <Button href={repo.html_url} color='primary'>
-                          {repo.name}
-                        </Button>
-                      </Typography>
-                      {repo.language && (
-                        <Typography> Language: {repo.language} </Typography>
-                      )}
-                      <Button
-                        href={repo.html_url}
-                        color='secondary'
-                        className={classes.noCaps}>
-                        https://www.github.com/{repo.full_name}
+          <Grid item xs={12}>
+            <Typography variant='h4'>Github Repos</Typography>
+          </Grid>
+          {repos === null ? (
+            <Spinner />
+          ) : (
+            repos.map(repo => {
+              return (
+                <Grid key={repo.id} item xs={12} sm={6} md={4}>
+                  <Grid>
+                    <Typography variant='h4' color='primary'>
+                      <Button href={repo.html_url} color='primary'>
+                        {repo.name}
                       </Button>
-                      {repo.created_at && (
-                        <Typography>
-                          Created at{' '}
-                          <Moment format='MM/DD/YYYY'>{repo.created_at}</Moment>{' '}
-                        </Typography>
-                      )}
+                    </Typography>
+                    {repo.language && (
+                      <Typography> Language: {repo.language} </Typography>
+                    )}
+                    <Button
+                      href={repo.html_url}
+                      color='secondary'
+                      className={classes.noCaps}>
+                      https://www.github.com/{repo.full_name}
+                    </Button>
+                    {repo.created_at && (
+                      <Typography>
+                        Created at{' '}
+                        <Moment format='MM/DD/YYYY'>{repo.created_at}</Moment>{' '}
+                      </Typography>
+                    )}
+                  </Grid>
+                  <Grid container direction='row' justify='space-evenly'>
+                    <Grid item>
+                      <Icon className={classes.starIcon}>star</Icon>
+                      <Typography> Stars: {repo.stargazers_count}</Typography>
                     </Grid>
-                    <Grid item xs={12}>
-                      <List>
-                        <ListItem>Stars: {repo.stargazers_count}</ListItem>
-
-                        <ListItem>Watchers: {repo.watchers_count}</ListItem>
-                        <ListItem>Forks: {repo.forks_count}</ListItem>
-                      </List>
+                    <Grid item>
+                      <Icon className={classes.eyeIcon}>remove_red_eye</Icon>
+                      <Typography>Watchers: {repo.watchers_count}</Typography>
+                    </Grid>
+                    <Grid item>
+                      <Icon className={classes.setIcon}>
+                        settings_input_component
+                      </Icon>
+                      <Typography>Forks: {repo.forks_count}</Typography>
                     </Grid>
                   </Grid>
-                );
-              })
-            )}
-          </Paper>
+                </Grid>
+              );
+            })
+          )}
         </Grid>
       ) : (
         <Typography variant='h5'>Empty Repository</Typography>
@@ -85,6 +89,15 @@ const useStyles = makeStyles(theme => ({
   },
   noCaps: {
     textTransform: 'lowercase'
+  },
+  starIcon: {
+    color: '#ffea00'
+  },
+  eyeIcon: {
+    color: '#673ab7'
+  },
+  setIcon: {
+    color: 'black'
   }
 }));
 
