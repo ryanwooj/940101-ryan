@@ -1,7 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
-const sslRedirect = require('heroku-ssl-redirect');
 
 const app = express();
 
@@ -9,7 +8,6 @@ const app = express();
 connectDB();
 
 //Init Middleware
-app.use(sslRedirect());
 app.use(express.json({ extended: false }));
 
 //Define Routes
@@ -17,10 +15,6 @@ app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profiles'));
 app.use('/api/posts', require('./routes/api/posts'));
-
-// app.get('/', function(req, res) {
-//   res.send('hello world');
-// });
 
 //Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
