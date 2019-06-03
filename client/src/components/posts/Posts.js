@@ -10,7 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 
 const Posts = ({ getPosts, posts: { posts, loading } }) => {
   useEffect(() => {
@@ -29,11 +28,11 @@ const Posts = ({ getPosts, posts: { posts, loading } }) => {
           alignItems='flex-start'>
           <Typography variant='h1'>Posts</Typography>
           <PostForm />
-          <>
+          <Grid item>
             {posts.map(post => (
               <PostItem key={post._id} post={post} />
             ))}
-          </>
+          </Grid>
         </Grid>
       </Paper>
     </Container>
