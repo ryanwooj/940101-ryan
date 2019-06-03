@@ -38,8 +38,6 @@ const Dashboard = props => {
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  console.log(props.profile, user);
-
   return loading && profile === null ? (
     <Spinner />
   ) : (
@@ -50,7 +48,7 @@ const Dashboard = props => {
             <Grid container direction='row' justify='flex-start'>
               <Grid item>
                 <Avatar
-                  src={user.avatar}
+                  src={user.avatar && user.avatar}
                   alt='So random'
                   className={classes.avatar}
                 />
@@ -59,7 +57,7 @@ const Dashboard = props => {
                 <Grid container direction='column'>
                   <Grid item>
                     <Typography variant='h4' className={classes.lowercase}>
-                      {user.name.split(' ').join('')}
+                      {user.name && user.name.split(' ').join('')}
                     </Typography>
                     <br />
                     <DashboardActions />
@@ -116,7 +114,7 @@ const Dashboard = props => {
         </Grid>
       ) : (
         <Container>
-          {user ? (
+          {loading && user ? (
             <Dialog
               aria-labelledby='No profile found'
               aria-describedby='please create a profile'
@@ -141,7 +139,7 @@ const Dashboard = props => {
               </Button>
             </Dialog>
           ) : (
-            <Grid />
+            <Spinner />
           )}
         </Container>
       )}

@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import Avatar from '@material-ui/core/Avatar';
+import Badge from '@material-ui/core/Badge';
 
 const PostItem = ({
   auth,
@@ -23,7 +24,11 @@ const PostItem = ({
 }) => {
   const classes = useStyles();
   return (
-    <Grid container direction='row' alignItems='flex-start'>
+    <Grid
+      container
+      direction='row'
+      alignItems='flex-start'
+      className={classes.bigToSmall}>
       <Grid item xs={3}>
         <Grid
           container
@@ -39,47 +44,49 @@ const PostItem = ({
         </Grid>
       </Grid>
       <Grid item xs={9}>
-        <Grid>
-          <Grid item className={classes.userTextField}>
-            <Typography variant='body1'>{text}</Typography>
-            <Typography variant='body2'>
-              Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
-            </Typography>
-          </Grid>
+        <Grid item className={classes.userTextField}>
+          <Typography variant='body1'>{text}</Typography>
+          <Typography variant='body2'>
+            Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
+          </Typography>
+        </Grid>
 
-          <Grid item className={classes.userTextField}>
-            {showAction && (
-              <Grid
-                container
-                direction='row'
-                justify='flex-start'
-                alignItems='flex-end'>
+        <Grid item className={classes.userTextField}>
+          {showAction && (
+            <Grid
+              container
+              direction='row'
+              justify='flex-start'
+              alignItems='flex-end'>
+              <Badge
+                color='primary'
+                badgeContent={likes.length > 0 ? likes.length : 0}>
                 <Button onClick={e => addLike(_id)}>
                   <Icon>thumb_up</Icon>
-                  {likes.length > 0 && <Typography>{likes.length}</Typography>}
                 </Button>
-                <Button onClick={e => removeLike(_id)}>
-                  <Icon>thumb_down</Icon>
-                </Button>
+              </Badge>
+              <Button onClick={e => removeLike(_id)}>
+                <Icon>thumb_down</Icon>
+              </Button>
+              <Badge
+                color='primary'
+                badgeContent={comments.length > 0 ? comments.length : 0}>
                 <Button to={`/post/${_id}`} component={Link} variant='outlined'>
-                  Comments{' '}
-                  {comments.length > 0 && (
-                    <Typography variant='body1'> {comments.length}</Typography>
-                  )}
+                  Comment
                 </Button>
-                {!auth.loading && user === auth.user._id && (
-                  <Button
-                    onClick={e => deletePost(_id)}
-                    style={{ marginLeft: '5px' }}
-                    type='button'
-                    variant='contained'
-                    color='secondary'>
-                    <Icon>delete_forever</Icon>
-                  </Button>
-                )}{' '}
-              </Grid>
-            )}
-          </Grid>
+              </Badge>
+              {!auth.loading && user === auth.user._id && (
+                <Button
+                  onClick={e => deletePost(_id)}
+                  style={{ marginLeft: '5px' }}
+                  type='button'
+                  variant='contained'
+                  color='secondary'>
+                  <Icon>delete_forever</Icon>
+                </Button>
+              )}{' '}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     </Grid>
@@ -93,8 +100,8 @@ const useStyles = makeStyles(theme => ({
     height: 100
   },
   userTextField: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(5)
+    margin: theme.spacing(4),
+    marginRight: theme.spacing(8)
   },
   avatarCont: {
     marginLeft: theme.spacing(3),
@@ -102,7 +109,8 @@ const useStyles = makeStyles(theme => ({
   },
   controlCont: {
     marginTop: theme.spacing(2)
-  }
+  },
+  bigToSmall: {}
 }));
 
 PostItem.defaultProps = {

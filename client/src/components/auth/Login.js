@@ -119,7 +119,7 @@ const materialStyles = makeStyles(theme => ({
   },
   paper: {
     marginTop: theme.spacing(8),
-    padding: theme.spacing(5),
+    padding: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'

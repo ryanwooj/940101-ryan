@@ -7,16 +7,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 
 const CommentForm = ({ postId, addComment }) => {
   const [text, setText] = useState('');
 
   const classes = useStyles();
   return (
-    <div className='post-form'>
-      <div className='bg-primary p'>
-        <h3>Leave a Comment</h3>
-      </div>
+    <Container maxWidth='lg' className={classes.form}>
+      <Typography variant='h5'>Leave a Comment</Typography>
       <form
         className='form my-1'
         onSubmit={e => {
@@ -48,13 +48,13 @@ const CommentForm = ({ postId, addComment }) => {
           </Grid>
         </Grid>
       </form>
-    </div>
+    </Container>
   );
 };
 
 const useStyles = makeStyles(theme => ({
   form: {
-    maxWidth: '80%'
+    marginTop: theme.spacing(3)
   }
 }));
 
