@@ -7,8 +7,15 @@ import PostItem from '../posts/PostItem';
 import CommentForm from './CommentForm';
 import CommentItem from './CommentItem';
 import { getPost } from '../../actions/post';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 
 const Post = ({ getPost, post: { post, loading }, match }) => {
+  const classes = useStyles();
+
   useEffect(() => {
     getPost(match.params.id);
   }, [getPost, match]);
@@ -16,21 +23,32 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
   return loading || post === null ? (
     <Spinner />
   ) : (
-    <>
-      <Link to='/posts' className='btn'>
+    <Paper className={classes.paper}>
+      <Button component={Link} to='/posts' variant='contained' color='primary'>
         {' '}
         Back to Posts
-      </Link>
+      </Button>
       <PostItem post={post} showAction={false} />
       <CommentForm postId={post._id} />
-      <div className='comments'>
+      <Container className='comments'>
         {post.comments.map(comment => (
-          <CommentItem key={comment._id} comment={comment} postId={post._id} />
+          <CommentItem
+            key={comment._id}
+            comment={comment}
+            postId={Number(post._id)}
+          />
         ))}
-      </div>
-    </>
+      </Container>
+    </Paper>
   );
 };
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    margin: theme.spacing(3),
+    padding: theme.spacing(1)
+  }
+}));
 
 Post.propTypes = {
   getPost: PropTypes.func.isRequired,

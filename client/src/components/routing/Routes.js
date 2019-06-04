@@ -9,6 +9,8 @@ import CreateProfile from '../profile-form/CreateProfile';
 import EditProfile from '../profile-form/EditProfile';
 import AddExperience from '../profile-form/AddExperience';
 import AddEducation from '../profile-form/AddEducation';
+import Education from '../dashboard/Education';
+import Experience from '../dashboard/Experience';
 import Profiles from '../profiles/Profiles';
 import Profile from '../profile/Profile';
 import Posts from '../posts/Posts';
@@ -17,7 +19,7 @@ import NotFound from '../layout/NotFound';
 
 const Routes = () => {
   return (
-    <section className='container'>
+    <section>
       <Alert />
       <Switch>
         <Route exact path='/register' component={Register} />
@@ -31,6 +33,16 @@ const Routes = () => {
         <PrivateRoute exact path='/add-education' component={AddEducation} />
         <PrivateRoute exact path='/posts' component={Posts} />
         <PrivateRoute exact path='/post/:id' component={Post} />
+        <PrivateRoute
+          exact
+          path='/dashboard/experience/:id'
+          component={Experience}
+        />
+        <PrivateRoute
+          exact
+          path='/dashboard/education/:id'
+          component={Education}
+        />
         <Route component={NotFound} />
       </Switch>
     </section>

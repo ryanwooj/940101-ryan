@@ -1,8 +1,26 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
+import { makeStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import twitterLogo from '../../images/twitter.svg';
+import facebookLogo from '../../images/facebook.svg';
+import youtubeLogo from '../../images/youtube.svg';
+import linkedinLogo from '../../images/linkedin.svg';
+import instagramLogo from '../../images/instagram.svg';
 
 const EditProfile = props => {
   const {
@@ -28,6 +46,8 @@ const EditProfile = props => {
   });
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
+
+  const classes = useStyles();
 
   const {
     company,
@@ -73,176 +93,186 @@ const EditProfile = props => {
   };
 
   return (
-    <Fragment>
-      <h1 className='large text-primary'>Create Your Profile</h1>
-      <p className='lead'>
-        <i className='fas fa-user' /> Beautiful profile starts from here!
-      </p>
-      <small>* = required field</small>
-      <form className='form' onSubmit={e => onSubmit(e)}>
-        <div className='form-group'>
-          <select name='status' value={status} onChange={e => onChange(e)}>
-            <option value='0'>* Select Professional Status</option>
-            <option value='Developer'>Developer</option>
-            <option value='Junior Developer'>Junior Developer</option>
-            <option value='Senior Developer'>Senior Developer</option>
-            <option value='Manager'>Manager</option>
-            <option value='Student or Learning'>Student or Learning</option>
-            <option value='Instructor'>Instructor or Teacher</option>
-            <option value='Intern'>Intern</option>
-            <option value='Other'>Other</option>
-          </select>
-          <small className='form-text'>
-            Give us an idea of where you are at in your career
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Company'
-            name='company'
-            value={company}
+    <Container
+      justify='center'
+      direction='column'
+      align='center'
+      className={classes.paper}>
+      <Typography>Edit Your Profile</Typography>
+      <Typography>
+        <Icon>format_quote</Icon> make it stand out <Icon>format_quote</Icon>
+      </Typography>
+      <form onSubmit={e => onSubmit(e)}>
+        <FormControl className='classes.formControl' fullWidth>
+          <FormHelperText>* = required field</FormHelperText>
+          <Select
+            name='status'
+            value={status}
             onChange={e => onChange(e)}
-          />
-          <small className='form-text'>
-            Could be your own company or one you work for
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Website'
-            name='website'
-            value={website}
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>
-            Could be your own or a company website
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Location'
-            name='location'
-            value={location}
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>
-            City & state suggested (eg. Boston, MA)
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='* Skills'
-            name='skills'
-            value={skills}
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>
-            Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Github Username'
-            name='github'
-            value={github}
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>
-            If you want your latest repos and a Github link, include your
-            username
-          </small>
-        </div>
-        <div className='form-group'>
-          <textarea
-            placeholder='A short bio of yourself'
-            name='bio'
-            value={bio}
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>Tell us a little about yourself</small>
-        </div>
+            input={<Input name='age' id='age-label-placeholder' />}
+            className={classes.selectEmpty}
+            displayEmpty>
+            <MenuItem value='0'>
+              <em>Select</em>
+            </MenuItem>
+            <MenuItem value='Developer'>Developer</MenuItem>
+            <MenuItem value='Junior Developer'>Junior Developer</MenuItem>
+            <MenuItem value='Senior Developer'>Senior Developer</MenuItem>
+            <MenuItem value='Manager'>Manager</MenuItem>
+            <MenuItem value='Student or Learning'>Student or Learning</MenuItem>
+            <MenuItem value='Instructor'>Instructor or Teacher</MenuItem>
+            <MenuItem value='Intern'>Intern</MenuItem>
+            <MenuItem value='Other'>Other</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          variant='outlined'
+          placeholder='Company'
+          fullWidth
+          name='company'
+          value={company}
+          onChange={e => onChange(e)}
+          margin='normal'
+        />
+        <TextField
+          variant='outlined'
+          margin='normal'
+          fullWidth
+          placeholder='Website'
+          name='website'
+          value={website}
+          onChange={e => onChange(e)}
+        />
+        <TextField
+          variant='outlined'
+          margin='normal'
+          fullWidth
+          placeholder='Location'
+          name='location'
+          value={location}
+          onChange={e => onChange(e)}
+        />
+        <TextField
+          variant='outlined'
+          margin='normal'
+          fullWidth
+          placeholder='* Skills'
+          name='skills'
+          value={skills}
+          onChange={e => onChange(e)}
+        />
+        <TextField
+          variant='outlined'
+          margin='normal'
+          fullWidth
+          placeholder='Github Username'
+          name='github'
+          value={github}
+          onChange={e => onChange(e)}
+        />
+        <TextField
+          variant='outlined'
+          margin='normal'
+          rowsMax='5'
+          label='Anything to Mention'
+          name='bio'
+          fullWidth
+          value={bio}
+          onChange={e => onChange(e)}
+        />
 
-        <div className='my-2'>
-          <button
+        <Grid className='my-2'>
+          <Button
             onClick={() => toggleSocialInputs(!displaySocialInputs)}
             type='button'
-            className='btn btn-light'>
+            color='primary'>
             Add Social Network Links
-          </button>
-          <span>Optional</span>
-        </div>
+          </Button>
+          <span>(Optional)</span>
+        </Grid>
+
         {displaySocialInputs && (
-          <Fragment>
-            <div className='form-group social-input'>
-              <i className='fab fa-twitter fa-2x' />
-              <input
-                type='text'
-                placeholder='Twitter URL'
+          <Container direction='column' justify='center' alignItems='center'>
+            <Grid item>
+              <Avatar src={twitterLogo} alt='twitterLogo' />
+              <TextField
+                variant='outlined'
+                label='Twitter URL'
                 name='twitter'
                 value={twitter}
                 onChange={e => onChange(e)}
               />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-facebook fa-2x' />
-              <input
-                type='text'
-                placeholder='Facebook URL'
+            </Grid>
+            <Grid item>
+              <Avatar src={facebookLogo} alt='facebookLogo' />
+              <TextField
+                variant='outlined'
+                label='facebook URL'
                 name='facebook'
                 value={facebook}
                 onChange={e => onChange(e)}
               />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-youtube fa-2x' />
-              <input
-                type='text'
-                placeholder='YouTube URL'
+            </Grid>
+            <Grid item>
+              <Avatar src={youtubeLogo} alt='youtubeLogo' />
+              <TextField
+                variant='outlined'
+                label='YouTube URL'
                 name='youtube'
                 value={youtube}
                 onChange={e => onChange(e)}
               />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-linkedin fa-2x' />
-              <input
-                type='text'
-                placeholder='Linkedin URL'
+            </Grid>
+            <Grid item>
+              <Avatar src={linkedinLogo} alt='linkedinLogo' />
+              <TextField
+                variant='outlined'
+                label='Linkedin URL'
                 name='linkedin'
                 value={linkedin}
                 onChange={e => onChange(e)}
               />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-instagram fa-2x' />
-              <input
-                type='text'
-                placeholder='Instagram URL'
+            </Grid>
+            <Grid item>
+              <Avatar src={instagramLogo} alt='instagramLogo' />
+              <TextField
+                variant='outlined'
+                label='Instagram URL'
                 name='instagram'
                 value={instagram}
                 onChange={e => onChange(e)}
               />
-            </div>
-          </Fragment>
+            </Grid>
+          </Container>
         )}
-
-        <input type='submit' className='btn btn-primary my-1' value='Submit' />
-        <Link className='btn btn-light my-1' to='/dashboard'>
+        <Button to='/dashboard' component={Link}>
           Go Back
-        </Link>
+        </Button>
+        <Button type='submit' color='primary' variant='outlined'>
+          Submit
+        </Button>
       </form>
-    </Fragment>
+    </Container>
   );
 };
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  },
+  paper: {
+    marginTop: theme.spacing(4),
+    padding: theme.spacing(4),
+    width: '75%'
+  }
+}));
 
 EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,

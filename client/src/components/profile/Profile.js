@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,6 +9,11 @@ import { getProfileById } from '../../actions/profile';
 import ProfileExperience from './ProfileExperience.js';
 import ProfileEducation from './ProfileEducation.js';
 import ProfileGithub from './ProfileGithub.js';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 const Profile = ({
   getProfileById,
@@ -16,65 +21,108 @@ const Profile = ({
   auth,
   match
 }) => {
+  const classes = useStyles();
   useEffect(() => {
     getProfileById(match.params.id);
   }, [getProfileById, match.params.id]);
   return (
-    <Fragment>
+    <div>
       {profile === null || loading ? (
         <Spinner />
       ) : (
-        <Fragment>
-          <Link to='/profiles' className='btn btn-light'>
-            Back to Profiles
-          </Link>
-          {auth.isAuthenticated &&
-            auth.loading === false &&
-            auth.user._id === profile.user._id && (
-              <Link to='/edit-profile' className='btn btn-dark'>
-                Edit Profile
-              </Link>
-            )}
-          <div className='profile-grid my-1'>
-            <ProfileTop profile={profile} />
-            <ProfileBottom profile={profile} />
-            <div className='profile-exp bg-white p-2'>
-              <h2 className='text-primary'>Experience</h2>
+        <Container maxWidth='lg'>
+          <Grid container direction='column' justify='center' align='center'>
+            <Grid container className={classes.mTop}>
+              <Grid item xs={6}>
+                <Button
+                  to='/profiles'
+                  component={Link}
+                  variant='outlined'
+                  color='primary'
+                  m={3}
+                  fullWidth>
+                  Back to Profiles
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                {auth.isAuthenticated &&
+                  auth.loading === false &&
+                  auth.user._id === profile.user._id && (
+                    <Button
+                      to='/edit-profile'
+                      component={Link}
+                      variant='outlined'
+                      color='primary'
+                      fullWidth>
+                      Edit Profile
+                    </Button>
+                  )}
+              </Grid>
+            </Grid>
+            <Grid container className={classes.mTop} justify='space-evenly'>
+              <Grid item xs={12} sm={6}>
+                <ProfileTop profile={profile} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ProfileBottom profile={profile} />
+              </Grid>
+            </Grid>
+
+            <Grid container className={classes.mTop}>
               {profile.experience.length > 0 ? (
-                <Fragment>
+                <>
                   {profile.experience.map(experience => (
                     <ProfileExperience
                       key={experience._id}
                       experience={experience}
+                      match
                     />
                   ))}
-                </Fragment>
+                </>
               ) : (
-                <h4>No Experience Credentials</h4>
+                <Typography variant='h5'>No Experience Credentials</Typography>
               )}
-            </div>
-            <div className='profile-edu bg-white p-2'>
-              <h2 className='text-primary'>Education</h2>
+            </Grid>
+            <Grid container className={classes.mTop}>
               {profile.education.length > 0 ? (
-                <Fragment>
+                <>
                   {profile.education.map(education => (
                     <ProfileEducation
                       key={education._id}
                       education={education}
+                      match
                     />
                   ))}
-                </Fragment>
+                </>
               ) : (
-                <h4>No Education Credentials</h4>
+                <Typography variant='h5'>No Education Credentials</Typography>
               )}
-            </div>
-            {profile.github && <ProfileGithub username={profile.github} />}
-          </div>
-        </Fragment>
+            </Grid>
+            <Grid container className={classes.mTop}>
+              {profile.github ? (
+                <ProfileGithub username={profile.github} />
+              ) : (
+                <Typography variant='h5'>No Github Repo</Typography>
+              )}
+            </Grid>
+          </Grid>
+        </Container>
       )}
-    </Fragment>
+    </div>
   );
 };
+
+const useStyles = makeStyles(theme => ({
+  halfWidth: {
+    width: 350
+  },
+  mTop: {
+    marginTop: theme.spacing(2)
+  },
+  paperWidth: {
+    width: '100%'
+  }
+}));
 
 Profile.propTypes = {
   getProfileById: PropTypes.func.isRequired,

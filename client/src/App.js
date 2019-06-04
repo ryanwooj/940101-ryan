@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
@@ -10,6 +10,7 @@ import Routes from './components/routing/Routes';
 import './App.css';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './actions/auth';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const middleware = applyMiddleware(thunkMiddleware);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -28,13 +29,14 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Fragment>
+        <>
+          <CssBaseline />
           <Navbar />
           <Switch>
             <Route exact path='/' component={Landing} />
             <Route component={Routes} />
           </Switch>
-        </Fragment>
+        </>
       </Router>
     </Provider>
   );

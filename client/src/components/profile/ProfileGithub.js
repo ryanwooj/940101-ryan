@@ -4,62 +4,89 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getGithubRepos } from '../../actions/profile';
 import Moment from 'react-moment';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 const ProfileGithub = ({ username, getGithubRepos, repos }) => {
   useEffect(() => {
     getGithubRepos(username);
   }, [getGithubRepos, username]);
 
+  const classes = useStyles();
   return (
-    <div className='profile-github'>
-      <h2 className='text-primary my-1'>Github Repos</h2>
-      {repos === null ? (
-        <Spinner />
+    <>
+      {repos.length > 0 ? (
+        <Grid
+          container
+          direction='row'
+          justify='space-evenly'
+          alignItems='flex-start'>
+          <Paper className={classes.paper}>
+            {repos === null ? (
+              <Spinner />
+            ) : (
+              repos.map(repo => {
+                return (
+                  <Grid key={repo.id}>
+                    <Grid item xs={12}>
+                      <Typography variant='h4'>Github Repos</Typography>
+                    </Grid>
+                    <Grid>
+                      <Typography variant='h4' color='primary'>
+                        <Button href={repo.html_url} color='primary'>
+                          {repo.name}
+                        </Button>
+                      </Typography>
+                      {repo.language && (
+                        <Typography> Language: {repo.language} </Typography>
+                      )}
+                      <Button
+                        href={repo.html_url}
+                        color='secondary'
+                        className={classes.noCaps}>
+                        https://www.github.com/{repo.full_name}
+                      </Button>
+                      {repo.created_at && (
+                        <Typography>
+                          Created at{' '}
+                          <Moment format='MM/DD/YYYY'>{repo.created_at}</Moment>{' '}
+                        </Typography>
+                      )}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <List>
+                        <ListItem>Stars: {repo.stargazers_count}</ListItem>
+
+                        <ListItem>Watchers: {repo.watchers_count}</ListItem>
+                        <ListItem>Forks: {repo.forks_count}</ListItem>
+                      </List>
+                    </Grid>
+                  </Grid>
+                );
+              })
+            )}
+          </Paper>
+        </Grid>
       ) : (
-        repos.map(repo => {
-          // console.log(repo);
-          return (
-            <div key={repo.id} className='repo bg-white p-1 my-1'>
-              <div>
-                <h4>
-                  <a
-                    href={repo.html_url}
-                    target='_blank'
-                    rel='noopener noreferrer'>
-                    {repo.name}
-                  </a>
-                </h4>
-                {repo.language && <p> Language: {repo.language} </p>}
-                <a href={repo.html_url}>
-                  https://www.github.com/{repo.full_name}
-                </a>
-                {repo.created_at && (
-                  <p>
-                    Created at{' '}
-                    <Moment format='MM/DD/YYYY'>{repo.created_at}</Moment>{' '}
-                  </p>
-                )}
-              </div>
-              <div>
-                <ul>
-                  <li className='badge badge-primary'>
-                    Stars: {repo.stargazers_count}
-                  </li>
-                  <li className='badge badge-dark'>
-                    Watchers: {repo.watchers_count}
-                  </li>
-                  <li className='badge badge-light'>
-                    Forks: {repo.forks_count}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          );
-        })
+        <Typography variant='h5'>Empty Repository</Typography>
       )}
-    </div>
+    </>
   );
 };
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    padding: theme.spacing(2)
+  },
+  noCaps: {
+    textTransform: 'lowercase'
+  }
+}));
 
 ProfileGithub.propTypes = {
   getGithubRepos: PropTypes.func.isRequired,
