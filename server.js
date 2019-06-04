@@ -1,8 +1,13 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
+const compression = require('compression');
 
 const app = express();
+
+//Compress The files to optimize the setting
+
+app.use(compression());
 
 //Connect Database
 connectDB();
