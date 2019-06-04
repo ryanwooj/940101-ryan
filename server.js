@@ -6,7 +6,7 @@ const cache = require('cache-headers');
 
 const pathsConfig = {
   paths: {
-    '/**/generic': {
+    '/**/': {
       staleRevalidate: 'ONE_HOUR',
       staleError: 'ONE_HOUR'
     },
