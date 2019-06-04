@@ -134,11 +134,9 @@ const AddEducation = ({ addEducation, history }) => {
           </Button>{' '}
           <Button
             margin='normal'
-            to='/dashboard'
             type='submit'
             variant='outlined'
-            color='primary'
-            component={Link}>
+            color='primary'>
             Submit
           </Button>
         </form>

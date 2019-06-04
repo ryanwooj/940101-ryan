@@ -32,7 +32,7 @@ const Dashboard = props => {
     <Spinner />
   ) : (
     <>
-      {profile === null && user === null ? (
+      {profile === null ? (
         <ModalComp />
       ) : (
         <Container maxWidth='md'>
@@ -44,7 +44,6 @@ const Dashboard = props => {
             <Grid item xs={12}>
               <Grid container direction='row' justify='flex-start'>
                 <Grid item>
-                  {console.log(user, profile)}
                   <Avatar
                     src={user && user.avatar}
                     alt='So random'
@@ -86,7 +85,8 @@ const Dashboard = props => {
                         {profile && profile.location}
                       </Typography>
                       <Typography variant='body1'>
-                        {profile && profile.education[0].school}
+                        {profile.education.length > 0 &&
+                          profile.education[0].school}
                       </Typography>
                       <br />
                       <Typography variant='body1'>
