@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -6,17 +6,13 @@ import { getCurrentProfile, deleteAccount } from '../../actions/profile';
 import { makeStyles } from '@material-ui/core/styles';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
+import ModalComp from './ModalComp';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContentText from '@material-ui/core/DialogContentText';
 
 const Dashboard = props => {
   const {
@@ -28,12 +24,6 @@ const Dashboard = props => {
 
   const classes = useStyles();
 
-  const [open, setOpen] = useState(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
@@ -41,110 +31,88 @@ const Dashboard = props => {
   return loading ? (
     <Spinner />
   ) : (
-    <Container maxWidth='md'>
-      {profile !== null && user !== null ? (
-        <Grid container direction='column' className={classes.root} spacing={2}>
-          <Grid item xs={12}>
-            <Grid container direction='row' justify='flex-start'>
-              <Grid item>
-                {console.log(user, profile)}
-                <Avatar
-                  src={user.avatar && user.avatar}
-                  alt='So random'
-                  className={classes.avatar}
-                />
-              </Grid>
-              <Grid item className={classes.textField}>
-                <Grid container direction='column'>
-                  <Grid item>
-                    <Typography variant='h4' className={classes.lowercase}>
-                      {user.name && user.name.split(' ').join('')}
-                    </Typography>
-                    <br />
-                    <DashboardActions />
-                  </Grid>
-                  <Grid container justify='flex-end'>
-                    <Button
-                      variant='contained'
-                      className={classes.eduExpButton}
-                      color='primary'
-                      component={Link}
-                      to={`/dashboard/experience/${user._id}`}>
-                      Experience
-                    </Button>
-                    <Button
-                      variant='contained'
-                      className={classes.eduExpButton}
-                      color='primary'
-                      component={Link}
-                      to={`/dashboard/education/${user._id}`}>
-                      Education
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant='h6'>
-                      {user.email.split('@')[0]}
-                    </Typography>
-                    <Typography variant='body1'>
-                      {profile.location && profile.location}
-                    </Typography>
-                    <Typography variant='body1'>
-                      {profile.education[0] && profile.education[0].school}
-                    </Typography>
-                    <br />
-                    <Typography variant='body1'>
-                      {profile.bio && profile.bio}
-                    </Typography>
-                  </Grid>
-
-                  {console.log(profile)}
-                  <br />
-                  <Grid item>
-                    <div className='my-2'>
+    <>
+      {profile === null && user === null ? (
+        <ModalComp />
+      ) : (
+        <Container maxWidth='md'>
+          <Grid
+            container
+            direction='column'
+            className={classes.root}
+            spacing={2}>
+            <Grid item xs={12}>
+              <Grid container direction='row' justify='flex-start'>
+                <Grid item>
+                  {console.log(user, profile)}
+                  <Avatar
+                    src={user && user.avatar}
+                    alt='So random'
+                    className={classes.avatar}
+                  />
+                </Grid>
+                <Grid item className={classes.textField}>
+                  <Grid container direction='column'>
+                    <Grid item>
+                      <Typography variant='h4' className={classes.lowercase}>
+                        {user && user.name.split(' ').join('')}
+                      </Typography>
+                      <br />
+                      <DashboardActions />
+                    </Grid>
+                    <Grid container justify='flex-end'>
                       <Button
                         variant='contained'
-                        color='secondary'
-                        onClick={() => deleteAccount()}>
-                        <Icon>delete</Icon> Delete Account
+                        className={classes.eduExpButton}
+                        color='primary'
+                        component={Link}
+                        to={`/dashboard/experience/${user._id}`}>
+                        Experience
                       </Button>
-                    </div>
+                      <Button
+                        variant='contained'
+                        className={classes.eduExpButton}
+                        color='primary'
+                        component={Link}
+                        to={`/dashboard/education/${user._id}`}>
+                        Education
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant='h6'>
+                        {user.email.split('@')[0]}
+                      </Typography>
+                      <Typography variant='body1'>
+                        {profile && profile.location}
+                      </Typography>
+                      <Typography variant='body1'>
+                        {profile && profile.education[0].school}
+                      </Typography>
+                      <br />
+                      <Typography variant='body1'>
+                        {profile && profile.bio}
+                      </Typography>
+                    </Grid>
+                    <br />
+                    <Grid item>
+                      <div className='my-2'>
+                        <Button
+                          variant='contained'
+                          color='secondary'
+                          onClick={() => deleteAccount()}>
+                          <Icon>delete</Icon> Delete Account
+                        </Button>
+                      </div>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
+            <Grid item xs={4} />
           </Grid>
-          <Grid item xs={4} />
-        </Grid>
-      ) : (
-        <div>
-          {!loading && !profile && (
-            <Dialog
-              aria-labelledby='No profile found'
-              aria-describedby='please create a profile'
-              open={open}
-              onClose={handleClose}>
-              <DialogTitle style={{ cursor: 'move' }}>
-                No Profile Found
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Please click the button below to Create a Profile
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions />
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button
-                variant='outlined'
-                color='secondary'
-                to='/create-profile'
-                component={Link}>
-                CREATE
-              </Button>
-            </Dialog>
-          )}
-        </div>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 

@@ -23,9 +23,20 @@ const Alert = ({ alerts }) => {
             />
           </Grid>
         );
+      } else if (alert.alertType === 'danger') {
+        return (
+          <Grid container alignItems='center' justify='center'>
+            <SnackbarContent
+              key={alert.id}
+              className={classes.error}
+              autohideduration={4000}
+              message={alert.msg}
+            />
+          </Grid>
+        );
       } else {
         return (
-          <Grid container alignItems='center' jsutify='center'>
+          <Grid container alignItems='center' justify='center'>
             <SnackbarContent
               key={alert.id}
               className={classes.error}
