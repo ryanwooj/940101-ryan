@@ -2,6 +2,19 @@ const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
 const compression = require('compression');
+const cache = require('cache-headers');
+
+const pathsConfig = {
+  paths: {
+    '/**/generic': {
+      staleRevalidate: 'ONE_HOUR',
+      staleError: 'ONE_HOUR'
+    },
+    '/default/values': {},
+    '/user/route': false,
+    '/**': 60
+  }
+};
 
 const app = express();
 
@@ -14,6 +27,8 @@ connectDB();
 
 //Init Middleware
 app.use(express.json({ extended: false }));
+
+app.use(cache.setupInitialCacheHeaders(pathsConfig));
 
 //Define Routes
 app.use('/api/users', require('./routes/api/users'));
