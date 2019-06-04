@@ -26,6 +26,7 @@
     - Axios
     - moment
     - proxy
+    - Material-ui
 
 ## Objectives
 
