@@ -2,6 +2,8 @@ const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
 const compression = require('compression');
+const http = require('http');
+const enforce = require('express-sslify');
 const cache = require('cache-headers');
 
 const pathsConfig = {
@@ -17,6 +19,9 @@ const pathsConfig = {
 };
 
 const app = express();
+
+//Enforcing https
+app.use(enforce.HTTPS({ trustAzureHeader: true }));
 
 //Compress The files to optimize the setting
 
