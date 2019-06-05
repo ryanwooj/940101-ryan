@@ -1,37 +1,9 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const path = require('path');
 const compression = require('compression');
 const cache = require('cache-headers');
 
-const pathsConfig = {
-  paths: {
-    '/**/': {
-      staleRevalidate: 'ONE_HOUR',
-      staleError: 'ONE_HOUR'
-    },
-    '/default/values': {},
-    '/user/route': false,
-    '/**': 60
-  }
-};
-
 const app = express();
-
-//Enforcing https
-app.all('*', function(req, res, next) {
-  console.log(
-    'req start: ',
-    req.secure,
-    req.hostname,
-    req.url,
-    app.get('port')
-  );
-  if (req.secure) {
-    return next();
-  }
-  res.redirect('https://' + req.hosthame + ':' + app.get('secPort') + req.url);
-});
 
 //Compress The files to optimize the setting
 
@@ -42,8 +14,6 @@ connectDB();
 
 //Init Middleware
 app.use(express.json({ extended: false }));
-
-app.use(cache.setupInitialCacheHeaders(pathsConfig));
 
 //Define Routes
 app.use('/api/users', require('./routes/api/users'));
@@ -60,6 +30,21 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
+//Enforcing https
+app.all('*', function(req, res, next) {
+  console.log(
+    'req start: ',
+    req.secure,
+    req.hostname,
+    req.url,
+    app.get('port')
+  );
+  if (req.secure) {
+    return next();
+  }
+  res.redirect('https://' + req.hosthame + ':' + app.get('secPort') + req.url);
+});
 
 //Define Port & use 4000 if doesn't have one
 const PORT = process.env.PORT || 5000;
