@@ -17,7 +17,7 @@ const ModalComp = () => {
 
   return (
     <Dialog
-      aria-labelledby='No profile found'
+      aria-labelledby='Profile not found'
       aria-describedby='please create a profile'
       open={open}
       onClose={handleClose}>

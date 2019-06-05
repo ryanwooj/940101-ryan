@@ -14,35 +14,27 @@ import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 
-const Dashboard = props => {
-  const {
-    getCurrentProfile,
-    deleteAccount,
-    auth: { user },
-    profile: { profile, loading }
-  } = props;
+const Dashboard = ({
+  getCurrentProfile,
+  deleteAccount,
+  auth: { user },
+  profile: { profile, loading }
+}) => {
+  useEffect(() => {
+    getCurrentProfile();
+  }, [getCurrentProfile, loading]);
 
   const classes = useStyles();
 
-  useEffect(() => {
-    getCurrentProfile();
-  }, [getCurrentProfile]);
-
-  return loading ? (
+  return loading && profile === null ? (
     <Spinner />
   ) : (
-    <>
-      {profile === null ? (
-        <ModalComp />
-      ) : (
-        <Container maxWidth='md'>
-          <Grid
-            container
-            direction='column'
-            className={classes.root}
-            spacing={2}>
-            <Grid item xs={12}>
-              <Grid container direction='row' justify='flex-start'>
+    <Container maxWidth='md'>
+      <Grid container direction='column' className={classes.root} spacing={2}>
+        <Grid item xs={12}>
+          <Grid container direction='row' justify='flex-start'>
+            {profile !== null ? (
+              <>
                 <Grid item>
                   <Avatar
                     src={user && user.avatar}
@@ -56,9 +48,9 @@ const Dashboard = props => {
                       <Typography variant='h4' className={classes.lowercase}>
                         {user && user.name.split(' ').join('')}
                       </Typography>
-                      <br />
                       <DashboardActions />
                     </Grid>
+
                     <Grid container justify='flex-end'>
                       <Button
                         variant='contained'
@@ -106,13 +98,15 @@ const Dashboard = props => {
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={4} />
+              </>
+            ) : (
+              <ModalComp />
+            )}
           </Grid>
-        </Container>
-      )}
-    </>
+        </Grid>
+        <Grid item xs={4} />
+      </Grid>
+    </Container>
   );
 };
 
