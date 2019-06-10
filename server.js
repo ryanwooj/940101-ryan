@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const compression = require('compression');
+const path = require('path');
 
 const app = express();
 
