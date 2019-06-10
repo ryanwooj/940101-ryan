@@ -2,7 +2,6 @@ const express = require('express');
 const connectDB = require('./config/db');
 const compression = require('compression');
 const path = require('path');
-
 const app = express();
 
 //Compress The files to optimize the setting
@@ -27,17 +26,9 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')) {
-      if (err) {
-        res.stratus(500).send(err)
-      }
-    }
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-
-
-//Define Port & use 4000 if doesn't have one
-const PORT = process.env.PORT || 5000;
 
 //Enforcing https
 app.all('*', function(req, res, next) {
@@ -46,7 +37,7 @@ app.all('*', function(req, res, next) {
     req.secure,
     req.hostname,
     req.url,
-    app.get(PORT)
+    app.get('port')
   );
   if (req.secure) {
     return next();
@@ -54,6 +45,8 @@ app.all('*', function(req, res, next) {
   res.redirect('https://' + req.hosthame + ':' + app.get('secPort') + req.url);
 });
 
+//Define Port & use 4000 if doesn't have one
+const PORT = process.env.PORT || 5000;
 
 //start server at the Port
 app.listen(PORT, () => console.log(`SERVER STARTED ON PORT ${PORT}`));
